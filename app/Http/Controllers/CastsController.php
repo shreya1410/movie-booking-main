@@ -18,6 +18,7 @@ class CastsController extends Controller
          $casts->name=request()->name;
         $casts->bio = request()->bio;
         $casts->birth_date = request()->birth_date;
+        $casts->list_of_movies = request()->list_of_movies;
         $casts->save();
     }
 
@@ -32,7 +33,7 @@ class CastsController extends Controller
        $casts = casts::find(request()->id);
        $casts->name=request()->name;
        $casts->bio = request()->bio;
-      // $casts->birth_date = request()->birth_date;
+       $casts->list_of_movies = request()->list_of_movies;
        $casts->update();
 
    }

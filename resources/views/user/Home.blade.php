@@ -19,11 +19,8 @@
 
             <div class="flex bg-gray-100 border-b border-gray-300 py-4">
                 <div class="container mx-auto">
-                    <router-link  class="mr-4" to='/'>Home</router-link>
-                    <router-link class="mr-4" to='/movie'>Movie</router-link>
-                    <router-link class="mr-4" to='/cast'>Cast</router-link>
-                    <router-link class="mr-4" to='/theatre'>Theatre</router-link>
-                           </div>
+                    <router-link  class="mr-4" to='/showmovie'>Home</router-link>
+                </div>
             </div>
             <div class="container mx-auto">
                 <router-view></router-view>

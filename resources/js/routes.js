@@ -1,12 +1,11 @@
-import ExampleComponent from "./components/ExampleComponent";
-import movieComponent from "./components/movieComponent";
-import castComponent from "./components/castComponent";
+import movieComponent from "./components/Admin/movieComponent";
+import castComponent from "./components/Admin/castComponent";
+import ShowMovieComponent from "./components/ShowMovieComponent";
+import MovieDetailComponent from "./components/MovieDetailComponent";
+import TheatreComponent from "./components/Admin/TheatreComponent";
 
 const route = [
-    {
-        path :'/',
-        component : ExampleComponent
-    },
+
     {
         path :'/movie',
         component: movieComponent
@@ -14,6 +13,18 @@ const route = [
     {
         path :'/cast',
         component: castComponent
+    },
+    {
+        path :'/showmovie',
+        component: ShowMovieComponent
+    },
+    {
+        path  : '/moviedetail',
+        component: MovieDetailComponent
+    },
+    {
+        path : '/theatre',
+        component: TheatreComponent
     }
 ];
 

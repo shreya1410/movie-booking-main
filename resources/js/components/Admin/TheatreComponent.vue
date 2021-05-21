@@ -3,35 +3,35 @@
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name"
-                   placeholder="Enter name" class="form-control"
+                   placeholder="Enter Theatre name" class="form-control"
                    v-model="name">
         </div>
         <div class="form-group">
-            <label for="bio">Bio</label>
-            <input type="text" id="bio"
-                   placeholder="Enter bio" class="form-control"
-                   v-model="bio">
+            <label for="show_timing">Overview</label>
+            <input type="text" id="show_timing"
+                   placeholder="Enter show Timing" class="form-control"
+                   v-model="showtime">
         </div>
         <div class="form-group">
-            <label for="birth_date">Birth date</label>
-            <input type="date" id="birth_date"
-                   placeholder="Enter birth date" class="form-control"
-                   v-model="birth_date">
+            <label for="city">City</label>
+            <input type="text" id="city"
+                   placeholder="Enter city" class="form-control"
+                   v-model="city">
         </div>
         <button
             class="btn btn-success btn-block"
             @click="save">Save
         </button>
-        <div class="col-md-12 mt-3" v-if="casts.length>0">
-            <h2 class="text-center">Casts</h2>
+        <div class="col-md-12 mt-3" v-if="theatres.length>0">
+            <h2 class="text-center">Theatres</h2>
             <ul class="list-group">
                 <li class="list-group-item"
-                    v-for="cast in casts" :key="cast.id">
-                    {{cast.name}} - {{cast.bio}} - {{cast.birth_date}}
+                    v-for="theatre in theatres" :key="theatre.id">
+                    {{theatre.name}} - {{theatre.showtime}} - {{theatre.city}}
                     <span class="float-right">
                      <button class="btn btn-warning btn-sm mr-2" type="button"
-                             data-toggle="modal"     data-target="#exampleModal"  @click="editCast(cast.id)">Update</button>
-                     <button class="btn btn-danger btn-sm mr-2" @click="deleteCast(cast.id)">Delete</button>
+                             data-toggle="modal"     data-target="#exampleModal"  @click="editTheatre(theatre.id)">Update</button>
+                     <button class="btn btn-danger btn-sm mr-2" @click="deleteTheatre(theatre.id)">Delete</button>
                  </span>
                 </li>
             </ul>
@@ -49,18 +49,18 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="editname">Title</label>
+                                <label for="editname">Theatre name</label>
                                 <input type="text" v-model="editname"  class="form-control" id="editname"  placeholder="Enter name">
                             </div>
                             <div class="form-group">
-                                <label for="editbio">Bio</label>
-                                <input type="text"  v-model="editbio"  class="form-control" id="editbio" placeholder="Enter bio">
+                                <label for="editshowtiming">Show timing</label>
+                                <input type="text"  v-model="editshowtiming"  class="form-control" id="editshowtiming" placeholder="Enter Show Timing">
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="editdate">birth date</label>-->
-<!--                                <input type="date" v-model="editdate" class="form-control" id="editdate"  placeholder="Enter birth date">-->
-<!--                            </div>-->
-                            <button type="submit"  @click.prevent="updateCast" data-dismiss="modal" class="btn btn-primary">Submit</button>
+                            <div class="form-group">
+                                <label for="editcity">City</label>
+                                <input type="text" v-model="editcity" class="form-control" id="editcity"  placeholder="Enter City">
+                            </div>
+                            <button type="submit"  @click.prevent="updateTheatre" data-dismiss="modal" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -75,17 +75,17 @@
 
 <script>
 export default {
-name: "castComponent",
+    name: "TheatreComponent",
     data(){
         return{
-            casts :{},
+            theatres :{},
             id: '',
             name:'',
-            bio: '',
-            birth_date:'',
+            showtime: '',
+            city:'',
             editname: '',
-            editbio :'',
-         //   editdate:'',
+            editshowtiming :'',
+            editcity : '',
         }
     },
     mounted() {
@@ -93,53 +93,52 @@ name: "castComponent",
     },
     methods:{
         fetchAll(){
-            axios.get('all_cast')
+            axios.get('all_theatre')
                 .then(response =>{
-                    this.casts= response.data
+                    this.theatres= response.data
                 });
         },
         save(){
-            axios.post('save_cast',{
+            axios.post('save_theatre',{
                 name :this.name,
-                bio: this.bio,
-                birth_date:this.birth_date,
+                showtime: this.showtime,
+                city : this.city,
             })
                 .then(response => {
                     this.name = '';
-                    this.bio = '';
-                    this.birth_date = '';
+                    this.showtime = '';
+                    this.city ='';
                     this.fetchAll();
                 });
         },
-        editCast(id){
-            axios.get('edit_cast/'+id)
+        editTheatre(id){
+            axios.get('edit_theatre/'+id)
                 .then(response=>{
                     this.id = response.data.id;
                     this.editname = response.data.name;
-                    this.editbio = response.data.bio;
-              //      this.editdate = response.data.birth_date;
+                    this.editshowtiming = response.data.showtime;
+                    this.editcity = response.data.city;
 
                 })
         },
-        updateCast(){
-            axios.put('update_cast',{
+        updateTheatre(){
+            axios.put('update_theatre',{
                 id : this.id,
                 name :this.editname,
-                bio : this.editbio,
-            //    birth_year: this.editdate
+                showtime : this.editshowtiming,
+                city : this.editcity,
             })
                 .then(response => {
                     this.fetchAll();
                 } );
         },
-        deleteCast(id){
-            axios.delete('delete_cast/'+ id)
+        deleteTheatre(id){
+            axios.delete('delete_theatre/'+ id)
                 .then(response =>{
                     this.fetchAll();
                 })
         }
     }
-
 }
 </script>
 

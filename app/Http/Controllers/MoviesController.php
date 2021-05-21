@@ -17,6 +17,7 @@ class MoviesController extends Controller
         $movie->title = request()->title;
         $movie->overview = request()->overview;
         $movie->release_year = request()->release_year;
+        $movie->cast = request()->cast;
         $movie->save();
     }
 
@@ -31,6 +32,7 @@ class MoviesController extends Controller
         $movies->title = request()->title;
         $movies->overview = request()->overview;
         $movies->release_year = request()->release_year;
+        $movies->cast = request()->cast;
         $movies->update();
     }
 

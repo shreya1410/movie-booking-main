@@ -18,6 +18,13 @@
                    placeholder="Enter release year" class="form-control"
                    v-model="release_year">
         </div>
+
+        <div class="form-group">
+            <label for="cast">Cast Members</label>
+            <input type="text" id="cast"
+                   placeholder="Enter cars members" class="form-control"
+                   v-model="cast">
+        </div>
         <button
             class="btn btn-success btn-block"
             @click="save">Save
@@ -27,7 +34,7 @@
             <ul class="list-group">
                 <li class="list-group-item"
                     v-for="movie in movies" :key="movie.id">
-                    {{movie.title}} - {{movie.overview}} - {{movie.release_year}}
+                    {{movie.title}} - {{movie.overview}} - {{movie.release_year}} - {{movie.cast}}
                     <span class="float-right">
                      <button class="btn btn-warning btn-sm mr-2" type="button"
                              data-toggle="modal"     data-target="#exampleModal"  @click="editMovie(movie.id)">Update</button>
@@ -60,6 +67,10 @@
                                 <label for="edityear">Release year</label>
                                 <input type="number" v-model="edityear" class="form-control" id="edityear"  placeholder="Enter year">
                             </div>
+                            <div class="form-group">
+                                <label for="editcast">Cast Members</label>
+                                <input type="text" v-model="editcast" class="form-control" id="editcast"  placeholder="Enter cast">
+                            </div>
                             <button type="submit"  @click.prevent="updatemovie" data-dismiss="modal" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -82,10 +93,12 @@ export default {
             id: '',
             title:'',
             overview: '',
+            cast : '',
             release_year:'',
             edittitle: '',
             editoverview :'',
             edityear:'',
+            editcast :'',
         }
     },
     mounted() {
@@ -103,11 +116,13 @@ export default {
                 title :this.title,
                 overview: this.overview,
                 release_year:this.release_year,
+                cast : this.cast,
             })
                 .then(response => {
                     this.title = '';
                     this.overview = '';
                     this.release_year = '';
+                    this.cast ='';
                     this.fetchAll();
                 });
         },
@@ -118,7 +133,7 @@ export default {
                 this.edittitle = response.data.title;
                 this.editoverview = response.data.overview;
                 this.edityear = response.data.release_year;
-
+                this.editcast = response.data.cast;
             })
         },
         updatemovie(){
@@ -126,7 +141,8 @@ export default {
                 id : this.id,
                 title :this.edittitle,
                 overview : this.editoverview,
-                release_year: this.edityear
+                release_year: this.edityear,
+                cast : this.editcast
             })
                 .then(response => {
                     this.fetchAll();
