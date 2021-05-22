@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\CastsController;
 use App\Http\Controllers\TheatreController;
+use App\Http\Controllers\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +20,17 @@ use App\Http\Controllers\TheatreController;
 
 Route::get('/', function () {
     return view('welcome');
+   // return view('admin/login');
 });
 
 
 Route::get('/user', function () {
     return view('user/Home');
+  // return view('auth/login');
 });
+
+Route::get('admin-login',[AdminLoginController::class,'showLoginForm'])->name('admin.login');
+Route::post('admin-login',[AdminLoginController::class,'login']);
 
 
 //movies routes
@@ -32,6 +39,7 @@ Route::post('save_movies',[MoviesController::class,'savemovies']);
 Route::get('edit_movie/{id}',[MoviesController::class,'edit_movie']);
 Route::put('update_movie',[MoviesController::class,'update_movie']);
 Route::delete('delete_movie/{id}',[MoviesController::class,'deletemovie']);
+Route::get('card_id/{id}',[MoviesController::class,'getcardid']);
 
 
 //cast routes
@@ -48,3 +56,8 @@ Route::post('save_theatre',[TheatreController::class,'savetheatre']);
 Route::get('edit_theatre/{id}',[TheatreController::class,'editthetre']);
 Route::put('update_theatre',[TheatreController::class,'updatetheatre']);
 Route::delete('delete_theatre/{id}',[TheatreController::class,'deletetheatre']);
+
+Auth::routes();
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

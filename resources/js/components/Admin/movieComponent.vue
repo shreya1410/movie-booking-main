@@ -25,6 +25,18 @@
                    placeholder="Enter cars members" class="form-control"
                    v-model="cast">
         </div>
+
+<!--     <div class="form-group">-->
+<!--         <label for="cast">Cast Members</label>-->
+<!--         <select   v-model="cast"  id="cast">-->
+<!--             <option v-for="cast in casts" :key="cast.id">-->
+<!--             {{cast.name}}-->
+
+<!--             </option>-->
+<!--         </select>-->
+<!--     </div>-->
+
+
         <button
             class="btn btn-success btn-block"
             @click="save">Save
@@ -87,9 +99,11 @@
 <script>
 export default {
     name: "movieComponent",
+
     data(){
         return{
             movies :{},
+         //   casts :{},
             id: '',
             title:'',
             overview: '',
@@ -103,8 +117,17 @@ export default {
     },
     mounted() {
         this.fetchAll()
+        this.fetchcast()
     },
     methods:{
+        fetchcast(){
+            axios.get('all_cast')
+                .then(response =>{
+                    console.log(response.data);
+                  this.casts= response.data
+                });
+        },
+
         fetchAll(){
           axios.get('all_movies')
             .then(response =>{
@@ -154,7 +177,7 @@ export default {
                 this.fetchAll();
             })
         }
-    }
+    },
 
 }
 </script>

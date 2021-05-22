@@ -17,14 +17,20 @@ class MoviesController extends Controller
         $movie->title = request()->title;
         $movie->overview = request()->overview;
         $movie->release_year = request()->release_year;
+
         $movie->cast = request()->cast;
         $movie->save();
+    //    $movie->casts()->sync(request()->cast);
     }
 
     public function edit_movie($id){
         $movies = movies::find($id);
         return response()->json($movies);
+    }
 
+    public function getcardid($id){
+        $movies = movies::find($id);
+        return response()->json($movies);
     }
 
     public function update_movie(){

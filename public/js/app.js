@@ -2258,11 +2258,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "movieComponent",
   data: function data() {
     return {
       movies: {},
+      //   casts :{},
       id: '',
       title: '',
       overview: '',
@@ -2276,17 +2289,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fetchAll();
+    this.fetchcast();
   },
   methods: {
-    fetchAll: function fetchAll() {
+    fetchcast: function fetchcast() {
       var _this = this;
 
+      axios.get('all_cast').then(function (response) {
+        console.log(response.data);
+        _this.casts = response.data;
+      });
+    },
+    fetchAll: function fetchAll() {
+      var _this2 = this;
+
       axios.get('all_movies').then(function (response) {
-        _this.movies = response.data;
+        _this2.movies = response.data;
       });
     },
     save: function save() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('save_movies', {
         title: this.title,
@@ -2294,27 +2316,27 @@ __webpack_require__.r(__webpack_exports__);
         release_year: this.release_year,
         cast: this.cast
       }).then(function (response) {
-        _this2.title = '';
-        _this2.overview = '';
-        _this2.release_year = '';
-        _this2.cast = '';
+        _this3.title = '';
+        _this3.overview = '';
+        _this3.release_year = '';
+        _this3.cast = '';
 
-        _this2.fetchAll();
+        _this3.fetchAll();
       });
     },
     editMovie: function editMovie(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('edit_movie/' + id).then(function (response) {
-        _this3.id = response.data.id;
-        _this3.edittitle = response.data.title;
-        _this3.editoverview = response.data.overview;
-        _this3.edityear = response.data.release_year;
-        _this3.editcast = response.data.cast;
+        _this4.id = response.data.id;
+        _this4.edittitle = response.data.title;
+        _this4.editoverview = response.data.overview;
+        _this4.edityear = response.data.release_year;
+        _this4.editcast = response.data.cast;
       });
     },
     updatemovie: function updatemovie() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.put('update_movie', {
         id: this.id,
@@ -2323,14 +2345,14 @@ __webpack_require__.r(__webpack_exports__);
         release_year: this.edityear,
         cast: this.editcast
       }).then(function (response) {
-        _this4.fetchAll();
+        _this5.fetchAll();
       });
     },
     deleteMovie: function deleteMovie(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios["delete"]('delete_movie/' + id).then(function (response) {
-        _this5.fetchAll();
+        _this6.fetchAll();
       });
     }
   }
@@ -2353,12 +2375,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MovieDetailComponent",
   data: function data() {
     return {
-      moviedetail: {}
+      movies: {},
+      cast_detail: {},
+      id: '',
+      movie_id: '',
+      title: '',
+      overview: '',
+      release_year: ''
     };
+  },
+  mounted: function mounted() {
+    this.getMovies();
+    this.getcast();
+  },
+  methods: {
+    getMovies: function getMovies() {
+      var _this = this;
+
+      axios.get('all_movies').then(function (response) {
+        // console.log(response.data);
+        _this.movies = response.data;
+      });
+    },
+    getcast: function getcast() {
+      var _this2 = this;
+
+      axios.get('all_cast').then(function (response) {
+        console.log(response.data);
+        _this2.cast_detail = response.data;
+      });
+    },
+    castdata: function castdata() {
+      alert('hi');
+    }
   }
 });
 
@@ -2397,12 +2474,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ShowMovieComponent",
+  props: ["showmovie"],
   data: function data() {
     return {
       movies: {},
       id: '',
+      movie_id: '',
       title: '',
       overview: '',
       release_year: ''
@@ -2416,11 +2499,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('all_movies').then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this.movies = response.data;
       });
     },
-    cardclick: function cardclick() {
+    cardclick: function cardclick(id) {
       this.$router.push('/moviedetail');
     }
   }
@@ -2539,7 +2622,8 @@ var route = [{
   path: '/showmovie',
   component: _components_ShowMovieComponent__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
-  path: '/moviedetail',
+  path: '/moviedetail/:id',
+  name: _components_MovieDetailComponent__WEBPACK_IMPORTED_MODULE_3__.default,
   component: _components_MovieDetailComponent__WEBPACK_IMPORTED_MODULE_3__.default
 }, {
   path: '/theatre',
@@ -39178,7 +39262,7 @@ var render = function() {
     _c(
       "button",
       { staticClass: "btn btn-success btn-block", on: { click: _vm.save } },
-      [_vm._v("Save\n    ")]
+      [_vm._v("Save\n        ")]
     ),
     _vm._v(" "),
     _vm.movies.length > 0
@@ -39194,7 +39278,7 @@ var render = function() {
                 { key: movie.id, staticClass: "list-group-item" },
                 [
                   _vm._v(
-                    "\n                " +
+                    "\n                    " +
                       _vm._s(movie.title) +
                       " - " +
                       _vm._s(movie.overview) +
@@ -39202,7 +39286,7 @@ var render = function() {
                       _vm._s(movie.release_year) +
                       " - " +
                       _vm._s(movie.cast) +
-                      "\n                "
+                      "\n                    "
                   ),
                   _c("span", { staticClass: "float-right" }, [
                     _c(
@@ -39489,9 +39573,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Hiii")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "row" }, [_c("h1", [_vm._v("hi")])])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -39519,24 +39616,40 @@ var render = function() {
       _c("div", { staticClass: "col-md-12" }, [
         _c(
           "div",
-          { staticClass: "row", on: { click: _vm.cardclick } },
+          { staticClass: "row" },
           _vm._l(_vm.movies, function(movie) {
             return _c("div", { key: movie.id, staticClass: "col-sm-6" }, [
               _c("div", { staticClass: "card-deck" }, [
                 _c("div", { staticClass: "card" }, [
                   _c("div", { staticClass: "card-body" }, [
                     _c("h5", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(movie.title))
+                      _vm._v(" Movie name  :  " + _vm._s(movie.title))
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "card-text" }, [
-                      _vm._v(_vm._s(movie.overview))
+                      _vm._v(" Overview :  " + _vm._s(movie.overview))
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "card-text" }, [
-                      _vm._v(_vm._s(movie.release_year))
+                      _vm._v(" Release year :  " + _vm._s(movie.release_year))
                     ])
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-footer" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "card-link btn btn-primary m-0 p-2",
+                          attrs: { to: "/moviedetail/" + movie.id }
+                        },
+                        [_vm._v("Movie detail")]
+                      )
+                    ],
+                    1
+                  )
                 ])
               ])
             ])

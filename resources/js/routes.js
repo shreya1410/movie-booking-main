@@ -19,7 +19,8 @@ const route = [
         component: ShowMovieComponent
     },
     {
-        path  : '/moviedetail',
+        path  : '/moviedetail/:id',
+        name : MovieDetailComponent,
         component: MovieDetailComponent
     },
     {

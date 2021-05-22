@@ -15,11 +15,13 @@
 <body>
 <div class="container-fluid">
     <div class="row">
+
         <div class="col-md-12" id="app">
 
             <div class="flex bg-gray-100 border-b border-gray-300 py-4">
                 <div class="container mx-auto">
-                    <router-link  class="mr-4" to='/showmovie'>Home</router-link>
+                    <a href="{{route('login')}}" >Login</a>
+{{--                    <router-link  class="mr-4" to='/showmovie'>All Movies</router-link>--}}
                 </div>
             </div>
             <div class="container mx-auto">

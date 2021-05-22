@@ -9,4 +9,11 @@ class movies extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public function theatre(){
+        return $this->belongsToMany('App\Models\theatre','movie_theatres');
+    }
+
+    public function casts(){
+        return $this->belongsToMany('App\Models\casts','movie_cast');
+    }
 }
