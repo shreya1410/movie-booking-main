@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'twitter_id',
+        'is_admin',
     ];
 
     /**
@@ -40,4 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function addNew($input)
+    {
+        $check = static::where('twitter_id',$input['twitter_id'])->first();
+
+        if(is_null($check)){
+            return static::create($input);
+        }
+
+        return $check;
+    }
 }

@@ -7,7 +7,6 @@
                           <div class="card-deck">
                                 <div class="card">
                                   <div class="card-body">
-<!--                                      <h5 class="card-title">{{movie.id}}</h5>-->
                                          <h5 class="card-title"> Movie name  :  {{movie.title}}</h5>
                                          <p class="card-text"> Overview :  {{movie.overview}}</p>
                                          <p class="card-text"> Release year :  {{movie.release_year}}</p>
@@ -50,7 +49,6 @@ export default {
             });
         },
         cardclick(id){
-
             this.$router.push('/moviedetail' );
         }
     }

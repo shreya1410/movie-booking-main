@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\CastsController;
 use App\Http\Controllers\TheatreController;
-use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,10 @@ Route::get('/user', function () {
   // return view('auth/login');
 });
 
-Route::get('admin-login',[AdminLoginController::class,'showLoginForm'])->name('admin.login');
-Route::post('admin-login',[AdminLoginController::class,'login']);
+Route::get('admin/home',[HomeController::class,'adminHome'])->name('admin.home')->middleware('is_admin');
+
+//Route::get('admin-login',[LoginController::class,'showLoginForm'])->name('admin.login');
+//Route::post('admin-login',[LoginController::class,'login']);
 
 
 //movies routes
