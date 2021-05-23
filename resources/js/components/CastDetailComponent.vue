@@ -1,22 +1,19 @@
 <template>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <b>{{ cast.name }}</b>
-            </div>
-            <div class="card-body">
-                <p class="card-text">Bio : {{ cast.bio }}</p>
-                <p class="card-text">Date of Birth : {{ cast.dob }}</p>
-            </div>
-            <div class="card-footer">
-                <h5 class="card-text">Cast Movies : </h5>
-                <div class="container">
-                    <div class="d-flex bd-highlight flex-wrap">
-                        <div class="card border-dark m-3 flex-fill" v-for="(movie,index) in movies" :key="index">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ movie.title }}</h5>
-                                <p>{{ movie.overview }}</p>
-                                <router-link :to="'/user/movie/'+movie.id" class="btn btn-primary">Read More</router-link>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row" >
+                    <div v-for="cast in casts" v-bind:key="cast.id"  class="col-sm-6">
+                        <div class="card-deck">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"> Cast name  :  {{cast.name}}</h5>
+                                    <p class="card-text"> Cast Bio :  {{cast.bio}}</p>
+                                    <p class="card-text"> Birth date :  {{cast.birth_date}}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <router-link :to = "'/showmovie'" class="card-link btn btn-primary m-0 p-2">Go Back</router-link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -28,30 +25,26 @@
 
 <script>
 export default {
-name: "CastDetailComponent",
+    name: "CastDetailComponent",
     data(){
-    return{
-        cast :{
-            id : "",
-            name : "",
-            bio : "",
-            birth_date : "",
-        },
-        movies :[],
-        city :[],
-    }
+        return{
+            id :'',
+            casts :{},
+            name :'',
+            bio :'',
+            birth_date : '',
+        }
     },
-    methods :{
-    getallmovies(){
-        axios.get('/getcast/' + this.$route.params.id)
-        .then(res =>{
-            this.cast.id = res.data.id;
-            this.cast.name = res.data.name;
-            this.cast.bio = res.data.bio;
-            this.cast.birth_date = res.data.birth_date;
-            this.getcast
-        })
-    }
+    mounted() {
+        this.getcast();
+    },
+    methods:{
+        getcast(){
+            axios.get('all_cast')
+                .then(response =>{
+                    this.casts= response.data
+                });
+        }
     }
 }
 </script>

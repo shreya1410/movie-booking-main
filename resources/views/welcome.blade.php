@@ -23,6 +23,7 @@
                     <router-link class="mr-4" to='/movie'>Movie</router-link>
                     <router-link class="mr-4" to='/cast'>Cast</router-link>
                     <router-link class="mr-4" to='/theatre'>Theatre</router-link>
+{{--                    <router-link class="mr-4" to='/theatredetail'>Theatre Layout</router-link>--}}
                            </div>
             </div>
             <div class="container mx-auto">

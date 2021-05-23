@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="row">
+                <div class="row" >
                     <div v-for="movie in movies" v-bind:key="movie.id"  class="col-sm-6">
                           <div class="card-deck">
                                 <div class="card">
@@ -12,7 +12,8 @@
                                          <p class="card-text"> Release year :  {{movie.release_year}}</p>
                                   </div>
                                     <div class="card-footer">
-                                        <router-link :to = "'/moviedetail/'+movie.id" class="card-link btn btn-primary m-0 p-2">Movie detail</router-link>
+                                        <router-link :to = "'/moviedetail'" class="card-link btn btn-primary m-0 p-2">Movie detail</router-link>
+                                        <router-link :to = "'/bookticket'" class="card-link btn btn-secondary m-0 p-2">Book Tickets</router-link>
                                     </div>
                                 </div>
                           </div>
@@ -48,9 +49,6 @@ export default {
                 this.movies = response.data;
             });
         },
-        cardclick(id){
-            this.$router.push('/moviedetail' );
-        }
     }
 }
 </script>
