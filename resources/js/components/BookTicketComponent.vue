@@ -1,5 +1,5 @@
 <template>
-<h1>hii</h1>
+<h1>Choose Your theatre and book seats</h1>
 </template>
 
 <script>

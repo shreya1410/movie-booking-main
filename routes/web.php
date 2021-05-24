@@ -30,7 +30,7 @@ Route::get('/user', function () {
   // return view('auth/login');
 });
 
-Route::get('admin/home',[HomeController::class,'adminHome'])->name('admin.home')->middleware('is_admin');
+//Route::get('admin/home',[HomeController::class,'adminHome'])->name('admin.home')->middleware('is_admin');
 
 //Route::get('admin-login',[LoginController::class,'showLoginForm'])->name('admin.login');
 //Route::post('admin-login',[LoginController::class,'login']);
